@@ -1,9 +1,11 @@
 name: Release
 
-# Push a tag like v1.2.1 to build both packages and publish a GitHub release.
+# When the version in platform/firefox/manifest.json changes on main,
+# build both packages and publish a GitHub release for that version.
 on:
   push:
-    tags: ["v*"]
+    branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -13,15 +15,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Build Firefox and Chrome packages
-        run: ./build.sh
-      - name: Checksums
-        run: cd dist && sha256sum *.xpi *.zip > SHA256SUMS.txt && cat SHA256SUMS.txt
-      - name: Publish release
+      - name: Read version
+        id: ver
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          v="${GITHUB_REF_NAME#v}"
+          v=$(python3 -c "import json;print(json.load(open('platform/firefox/manifest.json'))['version'])")
+          echo "v=$v" >> "$GITHUB_OUTPUT"
+          if gh release view "v$v" >/dev/null 2>&1; then echo "exists=true" >> "$GITHUB_OUTPUT"; else echo "exists=false" >> "$GITHUB_OUTPUT"; fi
+      - name: Build Firefox and Chrome packages
+        if: steps.ver.outputs.exists == 'false'
+        run: ./build.sh
+      - name: Checksums
+        if: steps.ver.outputs.exists == 'false'
+        run: cd dist && sha256sum *.xpi *.zip > SHA256SUMS.txt && cat SHA256SUMS.txt
+      - name: Publish release
+        if: steps.ver.outputs.exists == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          v="${{ steps.ver.outputs.v }}"
           cat > notes.md <<NOTES
           - Screenshot any page element at 3× (1×–8×) resolution, re-rendered sharp
           - Adjustable crop: handles, padding, keyboard nudging, or draw any area
@@ -34,5 +47,5 @@ jobs:
 
           Website: https://neforus.com/fidelio/
           NOTES
-          gh release create "$GITHUB_REF_NAME" --title "Fidelio $v" --notes-file notes.md \
+          gh release create "v$v" --target "$GITHUB_SHA" --title "Fidelio $v" --notes-file notes.md \
             dist/fidelio-$v-firefox.xpi dist/fidelio-$v-chrome.zip dist/SHA256SUMS.txt
