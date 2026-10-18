@@ -1,0 +1,83 @@
+FIDELIO: COPY-PASTE TEXT FOR BOTH STORES
+=============================================================
+
+NAME
+Fidelio – Hi-Res Element Screenshot
+
+SHORT SUMMARY  (Firefox "Summary", Chrome "Summary"; under 132 characters)
+Screenshot any page element at 3× (or any) resolution, with an adjustable crop.
+
+CATEGORY
+Firefox: Photos, Music & Videos
+Chrome:  Tools (or the nearest match the dashboard offers)
+
+FULL DESCRIPTION  (both stores)
+Take crisp, high-resolution screenshots of a single element on any web page.
+
+Normal screenshots are limited to your screen's resolution. This extension re-renders the element you pick at 3× (adjustable from 1× to 8×), so text, icons and edges stay sharp when you zoom in, print, or use the image in designs and docs.
+
+HOW IT WORKS
+• Click the toolbar button, press Ctrl+Shift+. (period), or right-click the page
+• Hover to highlight an element and click it. Use ↑ / ↓ to select the parent or go back
+• Adjust the crop: drag the edges or corners, move the box, add padding, or drag out any area
+• Press Enter. The PNG is saved to Downloads/Element Screenshots
+
+FEATURES
+• Real high-resolution rendering, not upscaling
+• Captures the whole element, even parts scrolled out of view
+• Adjustable crop with handles, padding, keyboard nudging and Shift to keep proportions
+• Set the multiplier, choose where to save, and optionally copy to the clipboard
+• No accounts, no tracking, no network requests. Everything stays on your computer
+
+PRIVACY POLICY / DATA  (both stores)
+This extension does not collect, store, transmit or sell any user data. Screenshots are saved only to your own computer. Settings are kept in the browser's local extension storage. The extension makes no network requests.
+
+
+CHROME ONLY: "PRIVACY PRACTICES" TAB
+-------------------------------------
+Single purpose description:
+Takes high-resolution screenshots of a single element or selected area of the current web page.
+
+Permission justifications:
+
+activeTab
+Lets the extension work only on the tab where the user clicks the toolbar button, uses the keyboard shortcut or chooses the right-click menu item. No other tabs are accessed.
+
+scripting
+Injects the element picker and crop overlay into the current tab after the user starts a capture, so they can choose what to screenshot.
+
+debugger
+Chrome has no other API that renders a page region above screen resolution. When the user confirms a capture, the extension briefly attaches to that tab only, sets a higher device scale factor, calls Page.captureScreenshot for the selected area, then immediately restores the original settings and detaches. It is never used to read, modify or monitor page content, network traffic or other tabs.
+
+storage
+Saves the user's settings (resolution multiplier, crop and save preferences) locally.
+
+downloads
+Saves the finished PNG screenshot to the user's Downloads folder.
+
+contextMenus
+Adds a "Screenshot an element in high resolution" item to the right-click menu.
+
+notifications
+Shows a short message if a capture can't be done (for example on chrome:// pages) or had to be reduced in size.
+
+Remote code: No, I am not using remote code.
+
+Data usage: check NONE of the data types. Then tick all three certifications
+(not sold to third parties / not used for unrelated purposes / not used for creditworthiness).
+
+
+FIREFOX ONLY
+------------
+"Does this add-on use any of the following?" / source code question: No. The code isn't minified or bundled, so no source upload is needed.
+Data collection: the package already declares "none". If the form asks, answer that it collects no data.
+
+
+IMAGES IN THIS KIT
+------------------
+screenshot-1-pick.png       1280×800  store screenshot (both stores)
+screenshot-2-adjust.png     1280×800  store screenshot (both stores)
+screenshot-3-result.png     1280×800  store screenshot (both stores)
+promo-tile-440x280.png      Chrome "Small promo tile" (required)
+icon-128.png                Chrome "Store icon" (required, 128×128)
+sample-3x-output.png        an actual 3× capture, for your own reference
